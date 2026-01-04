@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My PC - Игровой компьютер</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --dark-emerald: #0a2f23;
+            --emerald: #1a5d4c;
+            --light-emerald: #2a8c6f;
+            --accent-emerald: #3bd4a8;
+            --text-light: #e0f2ec;
+            --text-muted: #a0c8b8;
+            --shadow: rgba(10, 47, 35, 0.4);
+        }
+
+        body {
+            background-color: #0c1915;
+            color: var(--text-light);
+            line-height: 1.6;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(26, 93, 76, 0.15) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(43, 140, 111, 0.1) 0%, transparent 20%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Шапка */
+        header {
+            padding: 30px 0;
+            text-align: center;
+            border-bottom: 1px solid rgba(26, 93, 76, 0.3);
+            background-color: rgba(10, 47, 35, 0.7);
+            backdrop-filter: blur(5px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 10px;
+        }
+
+        .logo-icon {
+            color: var(--accent-emerald);
+            font-size: 28px;
+        }
+
+        .logo-text {
+            font-size: 32px;
+            font-weight: 700;
+            background: linear-gradient(to right, var(--accent-emerald), var(--light-emerald));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: 1px;
+        }
+
+        .twitch-notice {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-top: 5px;
+        }
+
+        .twitch-notice i {
+            color: #9146ff;
+            margin-right: 5px;
+        }
+
+        /* Основной контент */
+        .content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            padding: 60px 0;
+        }
+
+        @media (max-width: 992px) {
+            .content {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+        }
+
+        /* Изображение ПК */
+        .pc-image-section {
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 15px 30px var(--shadow);
+            height: fit-content;
+        }
+
+        .pc-image-container {
+            width: 100%;
+            min-height: 500px;
+            background-color: rgba(26, 93, 76, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .pc-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+
+        .pc-image:hover {
+            transform: scale(1.02);
+        }
+
+        .image-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(10, 47, 35, 0.9), transparent);
+            padding: 30px 20px 20px;
+        }
+
+        .pc-name {
+            font-size: 24px;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 5px;
+        }
+
+        .pc-tagline {
+            color: var(--accent-emerald);
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        /* Описание и характеристики */
+        .info-section {
+            background-color: rgba(26, 93, 76, 0.1);
+            border-radius: 12px;
+            padding: 30px;
+            border: 1px solid rgba(43, 140, 111, 0.2);
+            box-shadow: 0 10px 25px var(--shadow);
+        }
+
+        .section-title {
+            font-size: 24px;
+            margin-bottom: 25px;
+            color: var(--accent-emerald);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title i {
+            font-size: 22px;
+        }
+
+        .description {
+            margin-bottom: 30px;
+            color: var(--text-light);
+            font-size: 16px;
+        }
+
+        .specs-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        @media (max-width: 576px) {
+            .specs-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .spec-item {
+            background-color: rgba(10, 47, 35, 0.4);
+            border-radius: 8px;
+            padding: 15px;
+            border-left: 3px solid var(--accent-emerald);
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+
+        .spec-item:hover {
+            transform: translateY(-3px);
+            background-color: rgba(10, 47, 35, 0.6);
+        }
+
+        .spec-category {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .spec-value {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--accent-emerald);
+        }
+
+        /* Специальные возможности */
+        .features {
+            margin-top: 30px;
+        }
+
+        .features-list {
+            list-style: none;
+        }
+
+        .features-list li {
+            padding: 10px 0;
+            padding-left: 30px;
+            position: relative;
+            border-bottom: 1px solid rgba(43, 140, 111, 0.1);
+        }
+
+        .features-list li:last-child {
+            border-bottom: none;
+        }
+
+        .features-list li i {
+            position: absolute;
+            left: 0;
+            top: 12px;
+            color: var(--accent-emerald);
+        }
+
+        /* Футер */
+        footer {
+            text-align: center;
+            padding: 25px 0;
+            margin-top: 20px;
+            border-top: 1px solid rgba(26, 93, 76, 0.3);
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 10px;
+        }
+
+        .footer-link {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-link:hover {
+            color: var(--accent-emerald);
+        }
+
+        .back-to-twitch {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background-color: rgba(145, 70, 255, 0.1);
+            color: #bf94ff;
+            padding: 12px 24px;
+            border-radius: 6px;
+            text-decoration: none;
+            margin-top: 15px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .back-to-twitch:hover {
+            background-color: rgba(145, 70, 255, 0.25);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(145, 70, 255, 0.2);
+        }
+
+        /* Анимации */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.8s ease forwards;
+        }
+
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; }
+        .delay-4 { animation-delay: 0.4s; }
+        
+        .coming-soon {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+        
+        .twitch-link {
+            color: #9146ff;
+        }
+        
+        .twitch-link:hover {
+            color: #bf94ff;
+        }
+        
+        .image-not-found {
+            text-align: center;
+            padding: 40px;
+            color: var(--text-muted);
+        }
+        
+        .image-not-found i {
+            font-size: 60px;
+            margin-bottom: 15px;
+            color: rgba(59, 212, 168, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-desktop logo-icon"></i>
+                <div class="logo-text">MY PC SPECS</div>
+            </div>
+            <div class="twitch-notice">
+                <i class="fab fa-twitch"></i> Кнопка с Twitch ведет на эту страницу
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="content">
+            <div class="pc-image-section fade-in">
+                <div class="pc-image-container" id="image-container">
+                    <!-- Фото будет загружено здесь автоматически -->
+                    <!-- Браузер будет искать фото с именами: my-pc.jpg, pc.jpg, computer.jpg, setup.jpg, gaming-pc.jpg -->
+                    <img id="pc-photo" class="pc-image" alt="Мой игровой компьютер">
+                    
+                    <!-- Если фото не найдено, показываем это сообщение -->
+                    <div class="image-not-found" id="image-not-found">
+                        <i class="fas fa-desktop"></i>
+                        <p>Добавьте фото компьютера в папку с файлом</p>
+                        <p style="font-size: 14px; margin-top: 10px;">Назовите файл: <strong>my-pc.jpg</strong></p>
+                    </div>
+                </div>
+                
+                <div class="image-overlay">
+                    <h2 class="pc-name">Gurtx_X Gaming Rig</h2>
+                    <p class="pc-tagline">Система для стриминга и игр в 4K</p>
+                </div>
+            </div>
+
+            <div class="info-section fade-in delay-1">
+                <h2 class="section-title"><i class="fas fa-info-circle"></i> О системе</h2>
+                <p class="description">
+                    Этот компьютер идеально подходит для стриминга на Twitch и комфортной игры в требовательные проекты. 
+                    Система обеспечивает высокий FPS в играх на ультра настройках в разрешении 1440p и 4K, одновременно позволяя 
+                    вести трансляцию без потери производительности. Все компоненты подобраны для оптимального баланса 
+                    производительности, охлаждения и стоимости в стильном корпусе с подсветкой.
+                </p>
+
+                <h2 class="section-title delay-2"><i class="fas fa-microchip"></i> Характеристики</h2>
+                <div class="specs-grid">
+                    <div class="spec-item fade-in delay-2">
+                        <div class="spec-category">Процессор (CPU)</div>
+                        <div class="spec-value">Intel Core i7 14900KF</div>
+                    </div>
+                    <div class="spec-item fade-in delay-2">
+                        <div class="spec-category">Видеокарта (GPU)</div>
+                        <div class="spec-value">NVIDIA GeForce RTX 4070 Ti Super</div>
+                    </div>
+                    <div class="spec-item fade-in delay-3">
+                        <div class="spec-category">Оперативная память</div>
+                        <div class="spec-value">32 GB DDR5 5600 MHz</div>
+                    </div>
+                    <div class="spec-item fade-in delay-3">
+                        <div class="spec-category">Накопитель (SSD)</div>
+                        <div class="spec-value">1 TB Kingston NVMe</div>
+                    </div>
+                    <div class="spec-item fade-in delay-4">
+                        <div class="spec-category">Охлаждение</div>
+                        <div class="spec-value">Deepcool LS520</div>
+                    </div>
+                    <div class="spec-item fade-in delay-4">
+                        <div class="spec-category">Материнская плата</div>
+                        <div class="spec-value">ASRock B760 Pro RS</div>
+                    </div>
+                    <div class="spec-item fade-in">
+                        <div class="spec-category">Корпус</div>
+                        <div class="spec-value">ARDOR GAMING Crystal CC2</div>
+                    </div>
+                    <div class="spec-item fade-in">
+                        <div class="spec-category">Блок питания (БП)</div>
+                        <div class="spec-value">Deepcool PN850M 850W</div>
+                    </div>
+                </div>
+
+                <div class="features fade-in">
+                    <h2 class="section-title"><i class="fas fa-star"></i> Особенности системы</h2>
+                    <ul class="features-list">
+                        <li><i class="fas fa-check-circle"></i> Процессор i7 14900KF для максимальной производительности в играх</li>
+                        <li><i class="fas fa-check-circle"></i> RTX 4070 Ti Super с поддержкой DLSS 3 и трассировки лучей</li>
+                        <li><i class="fas fa-check-circle"></i> Эффективная система охлаждения Deepcool LS520</li>
+                        <li><i class="fas fa-check-circle"></i> Быстрый NVMe SSD для мгновенной загрузки игр</li>
+                        <li><i class="fas fa-check-circle"></i> Стильный корпус с хорошей вентиляцией и подсветкой</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>Игровая система для стриминга на Twitch</p>
+            <div class="footer-links">
+                <a href="https://www.twitch.tv/gurtx_x/about" class="footer-link twitch-link" target="_blank">
+                    <i class="fab fa-twitch"></i> Twitch
+                </a>
+                <a href="#" class="footer-link coming-soon" onclick="showComingSoon(event)">
+                    <i class="fab fa-discord"></i> Discord
+                </a>
+                <a href="#" class="footer-link coming-soon" onclick="showComingSoon(event)">
+                    <i class="fab fa-youtube"></i> YouTube
+                </a>
+            </div>
+            <a href="https://www.twitch.tv/gurtx_x/about" class="back-to-twitch" target="_blank">
+                <i class="fab fa-twitch"></i> Вернуться на мой Twitch канал
+            </a>
+            <p style="margin-top: 20px;">&copy; 2025 GurtX_X PC Specs. Все характеристики актуальны.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Список имен файлов, которые будем проверять
+        const possibleFilenames = [
+            'my-pc.jpg',
+            'my-pc.jpeg', 
+            'my-pc.png',
+            'my-pc.webp',
+            'pc.jpg',
+            'pc.jpeg',
+            'pc.png',
+            'pc.webp',
+            'computer.jpg',
+            'computer.jpeg',
+            'computer.png',
+            'computer.webp',
+            'setup.jpg',
+            'setup.jpeg',
+            'setup.png',
+            'setup.webp',
+            'gaming-pc.jpg',
+            'gaming-pc.jpeg',
+            'gaming-pc.png',
+            'gaming-pc.webp'
+        ];
+
+        // Функция для проверки существования файла
+        function checkImageExists(filename, callback) {
+            const img = new Image();
+            img.onload = function() {
+                callback(true, filename);
+            };
+            img.onerror = function() {
+                callback(false, filename);
+            };
+            img.src = filename;
+        }
+
+        // Поиск фото при загрузке страницы
+        document.addEventListener('DOMContentLoaded', function() {
+            const pcPhoto = document.getElementById('pc-photo');
+            const imageNotFound = document.getElementById('image-not-found');
+            
+            // Пробуем загрузить каждое возможное имя файла
+            let foundImage = false;
+            let checkedCount = 0;
+            
+            function tryNextImage() {
+                if (checkedCount >= possibleFilenames.length) {
+                    // Все файлы проверены, фото не найдено
+                    if (!foundImage) {
+                        pcPhoto.style.display = 'none';
+                        imageNotFound.style.display = 'block';
+                    }
+                    return;
+                }
+                
+                const filename = possibleFilenames[checkedCount];
+                checkedCount++;
+                
+                checkImageExists(filename, function(exists, file) {
+                    if (exists && !foundImage) {
+                        // Нашли фото!
+                        foundImage = true;
+                        pcPhoto.src = filename;
+                        pcPhoto.style.display = 'block';
+                        imageNotFound.style.display = 'none';
+                        console.log(`Фото найдено: ${filename}`);
+                    }
+                    
+                    // Пробуем следующий файл
+                    tryNextImage();
+                });
+            }
+            
+            // Начинаем поиск
+            tryNextImage();
+            
+            // Анимации при прокрутке
+            const fadeElements = document.querySelectorAll('.fade-in');
+            
+            const fadeInOnScroll = function() {
+                fadeElements.forEach(element => {
+                    const elementTop = element.getBoundingClientRect().top;
+                    const elementVisible = 150;
+                    
+                    if (elementTop < window.innerHeight - elementVisible) {
+                        element.style.opacity = "1";
+                        element.style.transform = "translateY(0)";
+                    }
+                });
+            };
+            
+            // Устанавливаем начальное состояние для анимации
+            fadeElements.forEach(element => {
+                element.style.opacity = "0";
+                element.style.transform = "translateY(20px)";
+                element.style.transition = "opacity 0.8s ease, transform 0.8s ease";
+            });
+            
+            // Проверяем при загрузке и прокрутке
+            fadeInOnScroll();
+            window.addEventListener('scroll', fadeInOnScroll);
+        });
+        
+        // Функция для показа уведомления "скоро будет"
+        function showComingSoon(event) {
+            event.preventDefault();
+            alert("Эта ссылка появится в ближайшее время!");
+        }
+    </script>
+</body>
+</html>
